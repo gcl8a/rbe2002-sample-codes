@@ -22,25 +22,15 @@ void ParseSerialInput(void)
   {
     case 'P':
       k = serialInput.substring(1).toFloat();
-      motorController.SetKp(k);
+      leftMotorController.SetKp(k);
       break;
     case 'I':
       k = serialInput.substring(1).toFloat();
-      motorController.SetKi(k);
+      leftMotorController.SetKi(k);
       break;
     case 'D':
       k = serialInput.substring(1).toFloat();
-      motorController.SetKd(k);
-      break;
-    case 'L': //target speed
-//      float targetLeft = serialInput.substring(1).toFloat();
-//      Serial.print("Setting left target to: ");
-//      Serial.println(targetLeft);
-      break;
-    case 'R': //target speed
-//      float targetRight = serialInput.substring(1).toFloat();
-//      Serial.print("Setting right target to: ");
-//      Serial.println(targetRight);
+      leftMotorController.SetKd(k);
       break;
   }
 

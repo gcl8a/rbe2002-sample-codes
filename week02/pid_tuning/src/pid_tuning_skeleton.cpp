@@ -7,27 +7,25 @@
 
 #include <Romi32U4.h>
 
-//#include "params.h"
 #include "serial_comm.h"
-
-#include <PIDcontroller.h>
+#include "PIDcontroller.h"
 
 Romi32U4ButtonA buttonA;
 
-PIDController motorController(1);
-volatile uint8_t PIDController::readyToPID = 0;   //a flag that is set when the PID timer overflows
+PIDController leftMotorController(1); //start with  Kp = 1
+volatile uint8_t PIDController::readyToPID = 0; //a flag that is set when the PID timer overflows
 
 Romi32U4Motors motors;
-
 Romi32U4Encoders encoders;
+
 volatile int16_t countsLeft = 0;
 volatile int16_t countsRight = 0;
 
 void setup()
 {
   Serial.begin(115200);
-  while(!Serial) {}  //IF YOU DON'T COMMENT THIS OUT, YOU MUST OPEN THE SERIAL MONITOR TO START
-  Serial.println("Hi.");
+  //while(!Serial) {}  //IF YOU DON'T COMMENT THIS OUT, YOU MUST OPEN THE SERIAL MONITOR TO START
+  Serial.println("Hi");
 
   noInterrupts(); //disable interupts while we mess with the Timer4 registers
   
@@ -37,7 +35,12 @@ void setup()
   TCCR4C = 0x04; //toggles pin 6 at the timer frequency
   TCCR4D = 0x00; //normal mode
 
-  OCR4C = 249;   //TOP goes in OCR4C 
+  /*
+   * EDIT THE LINE BELOW WITH YOUR VALUE FOR TOP
+   */
+
+  OCR4C = ?????????????????????????????;   //TOP goes in OCR4C 
+
   TIMSK4 = 0x04; //enable overflow interrupt
   
   interrupts(); //re-enable interrupts
@@ -46,40 +49,37 @@ void setup()
 }
 
 float targetLeft = 0;
-float targetRight = 0;
 
 void loop() 
 {    
   if(buttonA.getSingleDebouncedPress())
   {
     targetLeft = targetLeft < 40 ? 50 : 25;
-    targetRight = targetLeft;    
   }
   
-  if(motorController.readyToPID) //timer flag set
+  if(PIDController::readyToPID) //timer flag set
   {
-    motorController.readyToPID = 0;
-    // //for tracking previous counts
+    // reset the flag
+    PIDController::readyToPID = 0;
+    
+    // for tracking previous counts
     static int16_t prevLeft = 0;
-    static int16_t prevRight = 0;
 
     /*
      * Do PID stuffs here. Note that we turn off interupts while we read countsLeft/Right
      * so that it won't get accidentally updated (in the ISR) while we're reading it.
      */
     noInterrupts();
-    int16_t speedLeft = countsLeft - prevLeft;
-    int16_t speedRight = countsRight - prevRight;
 
+    int16_t speedLeft = countsLeft - prevLeft;
     prevLeft = countsLeft;
-    prevRight = countsRight;
+
     interrupts();
 
-    int16_t errorLeft = targetLeft - speedLeft;
-
-    float effortLeft = motorController.ComputeEffort(errorLeft);
+    int16_t errorLeft = targetLeft - speedLeft; //calculate the error
+    float effortLeft = leftMotorController.ComputeEffort(errorLeft); //calculate effort from error
     
-    motors.setEfforts(effortLeft, 0); //up to you to add the right motor
+    motors.setEfforts(effortLeft, 0); 
 
     Serial.print(millis());
     Serial.print('\t');
@@ -87,8 +87,9 @@ void loop()
     Serial.print('\t');
     Serial.print(speedLeft);
     Serial.print('\t');
-    Serial.print(effortLeft/10.0);
-    //you'll want to add more serial printout here for testing
+    Serial.print(effortLeft/10.0); //divide effort by 10 for better plotting
+
+    //you may want to add more serial printout here for testing
 
     Serial.print('\n');
   }
@@ -102,8 +103,8 @@ void loop()
 }
 
 /*
- * ISR for timing. Basically, raise a flag on overflow. Timer4 is set up to run with a pre-scaler 
- * of 1024 and TOP is set to 249. Clock is 16 MHz, so interval is dT = (1024 * 250) / 16 MHz = 16 ms.
+ * ISR for timing. On overflow, it takes a 'snapshot' of the encoder counts and raises a flag to let
+ * the main program it is time to execute the PID calculations.
  */
 ISR(TIMER4_OVF_vect)
 {
