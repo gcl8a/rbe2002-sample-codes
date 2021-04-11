@@ -5,7 +5,7 @@
 class PIDController
 {
 private:
-    float target = 0;
+    //float target = 0;
 
     float Kp, Ki, Kd;
     float currError = 0;
