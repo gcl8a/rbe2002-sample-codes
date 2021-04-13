@@ -24,7 +24,7 @@ enum PULSE_STATE {PLS_IDLE, PLS_WAITING_LOW, PLS_WAITING_HIGH, PLS_CAPTURED};
 volatile PULSE_STATE pulseState = PLS_IDLE;
 
 //this may be most any pin, connect the pin to Trig on the sensor
-const uint8_t trigPin = 14;
+const uint8_t trigPin = 12;
 
 //for scheduling pings
 uint32_t lastPing = 0;
