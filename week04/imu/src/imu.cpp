@@ -21,6 +21,11 @@
 
 #include <Romi32U4.h>
 
+Romi32U4ButtonA buttonA;
+Romi32U4ButtonB buttonB;
+Romi32U4ButtonC buttonC;
+Romi32U4Motors motors;
+
 LSM6 imu;
 
 void setup()
@@ -48,12 +53,12 @@ void setup()
   // Set the accelerometer full scale to 16 g because the default
   // value is too low, and leave the other settings the same.
   imu.setFullScaleAcc(LSM6::ACC_FS16);
+
+  while(!Serial){}
+  Serial.println(imu.readReg(LSM6::CTRL1_XL), HEX);
+  while(!buttonB.getSingleDebouncedPress()){}
 }
 
-Romi32U4ButtonA buttonA;
-Romi32U4ButtonB buttonB;
-Romi32U4ButtonC buttonC;
-Romi32U4Motors motors;
 
 bool showAcc = true;
 bool showGyro = false;
@@ -70,6 +75,9 @@ void loop()
   if(imu.getStatus() & 0x02)
   {
     imu.read();
+
+    Serial.print(millis());
+    Serial.print('\t');
 
     if(showAcc)
     {
