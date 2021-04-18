@@ -29,11 +29,9 @@ void setup()
   imu.enableDefault();
 
   // Set the gyro full scale and data rate
-  // imu.setFullScaleGyro(LSM6::GYRO_FS500);
   imu.setGyroDataOutputRate(LSM6::ODR13);
 
   // Set the accelerometer full scale and data rate
-  // imu.setFullScaleAcc(LSM6::ACC_FS4);
   imu.setAccDataOutputRate(LSM6::ODR13);
 }
 
