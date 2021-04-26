@@ -10,14 +10,13 @@
             "includePath": [
                 "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/include",
                 "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/src",
-                "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/.pio/libdeps/a-star32U4/wpi-32u4-library/src",
-                "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/variants/leonardo",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "/Users/greg/.platformio/packages/tool-unity",
                 ""
             ],
@@ -26,14 +25,13 @@
                 "path": [
                     "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/include",
                     "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/src",
-                    "/Users/greg/Documents/PlatformIO/skeleton codes/rbe2002/week04/imu/.pio/libdeps/a-star32U4/wpi-32u4-library/src",
-                    "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/variants/leonardo",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "/Users/greg/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "/Users/greg/.platformio/packages/tool-unity",
                     ""
                 ]
