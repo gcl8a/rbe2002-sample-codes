@@ -50,8 +50,8 @@ void loop()
   {
     imu.read();
 
-    Serial.print(millis());
-    Serial.print('\t');
+    // Serial.print(millis());
+    // Serial.print('\t');
 
     if(showAcc)
     {
