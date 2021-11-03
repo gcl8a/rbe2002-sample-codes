@@ -4,8 +4,7 @@
  * Author: Greg Lewin, adapted from original work by hephaestus
  */
 
-#ifndef LIBRARIES_RBE200nLIB_SRC_MOTOR_BASE_H_
-#define LIBRARIES_RBE200nLIB_SRC_MOTOR_BASE_H_
+#pragma once
 
 #include <Arduino.h>
 #include <ESP32Servo.h>
@@ -133,5 +132,3 @@ private:
 	 */
 	void setEffortLocal(float effort);
 };
-
-#endif 
